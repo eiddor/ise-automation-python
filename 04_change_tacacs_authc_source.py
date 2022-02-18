@@ -46,7 +46,12 @@ mandatorydata = {
                 }
 
 # And now, after all of that work, we can change the identity source in the default authc policy to "Internal Users"
+# I had to add the if_* rules because the ISE API changed between 3.1 and 3.1p1 and now they're mandatory
+# for some ridiculous reason 
 api.device_administration_authentication_rules.update_device_admin_authentication_rule_by_id(id=ruleId,
                                                                                             policy_id=policyId, 
+                                                                                            if_auth_fail="REJECT",
+                                                                                            if_user_not_found="REJECT",
+                                                                                            if_process_fail="DROP",
                                                                                             rule=mandatorydata,
                                                                                             identity_source_name="Internal Users")

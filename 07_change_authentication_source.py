@@ -87,12 +87,20 @@ dot1xruledata = {
                 }
 
 # And now, after all of that work, we can change the identity source in the default and dot1x authc policies to "Internal Users"
+# I had to add the if_* rules because the ISE API changed between 3.1 and 3.1p1 and now they're mandatory
+# for some ridiculous reason 
 api.network_access_authentication_rules.update_network_access_authentication_rule_by_id(id=defaultruleId[0],
                                                                                             policy_id=policyId,
+                                                                                            if_auth_fail="REJECT",
+                                                                                            if_user_not_found="REJECT",
+                                                                                            if_process_fail="DROP",                                                                                            
                                                                                             rule=defaultruledata,
                                                                                             identity_source_name="Internal Users")
 
 api.network_access_authentication_rules.update_network_access_authentication_rule_by_id(id=dot1xruleId[0],
                                                                                             policy_id=policyId,
+                                                                                            if_auth_fail="REJECT",
+                                                                                            if_user_not_found="REJECT",
+                                                                                            if_process_fail="DROP",                                                                                            
                                                                                             rule=dot1xruledata,
                                                                                             identity_source_name="Internal Users")

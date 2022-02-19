@@ -40,6 +40,7 @@ for groupname in groups['userlist']:
                                                 last_name=groupname['lastname'],
                                                 description=groupname['description'],
                                                 password=groups['default_password'],
+                                                change_password=False
                                                 identity_groups=groupid,
                                                 password_idstore="Internal Users")
         print("Creating user:", groupname['name'])
